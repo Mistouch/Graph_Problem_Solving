@@ -1,0 +1,110 @@
+// ----------------------------------------SHAHRIA SARKER SHUVO -----------------------------------------
+//-------------------------------------CSE North South University----------------------------------------
+#include<bits/stdc++.h>
+using namespace std;
+
+#define fastkor ios_base::sync_with_stdio(false),cin.tie(0),cout.tie(0)
+#define endl '\n'
+#define ll long long int
+
+#define dvect vector<int>vect
+#define pb(x) push_back(x)
+#define vectinL(n) for(ll i=0;i<n;i++){ ll x; cin >> x; vect.push_back(x);}
+#define vectin(n) for(int i=0;i<n;i++){ int x; cin >> x; vect.push_back(x);}
+#define vectout for(auto v: vect) cout<<v<<" "; cout<<endl;
+#define sortkor(x) sort(x.begin(),x.end())
+#define reversekor(x) reverse(x.begin(),x.end())
+
+#define mini_pos(a)    ( min_element((a).begin(), (a).end()) - (a).begin())
+#define maxi_pos(a)    ( max_element((a).begin(), (a).end()) - (a).begin())
+
+#define F first
+#define S second
+#define YES cout<<"YES\n"
+#define YES1 cout<<"Case "<<case++<<": YES\n"
+#define NO cout<<"NO\n"
+#define NO1 cout<<"Case "<<case++<<": NO\n"
+#define precision(n) fixed<<setprecision(n)
+#define testcase ll t; cin >>t; while(t--)
+const double err=1e-9;
+const int N=1e5;
+int vis[8][8];
+int lev[8][8];
+int getX(string s)
+{
+    return s[0]-'a';
+}
+int getY(string s)
+{
+    return s[1]-'1';
+}
+vector<pair<int,int>> moves=
+{
+    {-1,2},{1,2},
+    {-1,-2},{1,-2},
+    {2,-1},{2,1},
+    {-2,-1},{-2,1},
+};
+bool ok(int x, int y)
+{
+    return x>=0 && x<8 && y>=0 && y<8;
+}
+void reset()
+{
+    for(int i=0; i<8; i++)
+    {
+        for(int j=0; j<8; j++)
+        {
+            vis[i][j]=0;
+            lev[i][j]=0;
+        }
+    }
+}
+int bfs(string src1, string src2)
+{
+    int strtX=getX(src1);
+    int strtY=getY(src1);
+    int destX=getX(src2);
+    int destY=getY(src2);
+
+    queue<pair<int,int>>q;
+    q.push({strtX,strtY});
+    vis[strtX][strtY]=1;
+
+    while(!q.empty())
+    {
+        pair<int,int> v= q.front();
+        q.pop();
+        for(auto mv: moves)
+        {
+            int childX=mv.F+v.F;
+            int childY=mv.S+v.S;
+            if(!ok(childX,childY))continue;
+            if(!vis[childX][childY])
+            {
+                q.push({childX,childY});
+                vis[childX][childY]=1;
+                lev[childX][childY]=lev[v.F][v.S]+1;
+            }
+        }
+
+    }
+    return lev[destX][destY];
+
+
+
+}
+int main()
+{
+    fastkor;
+    int n;
+    cin >> n;
+    while(n--)
+    {
+        reset();
+        string s1,s2;
+        cin >> s1 >> s2;
+
+        cout<<bfs(s1,s2)<<"\n";
+    }
+}
