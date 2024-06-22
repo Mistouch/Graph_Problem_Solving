@@ -1,0 +1,103 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+#define fastkor ios_base::sync_with_stdio(false),cin.tie(0),cout.tie(0)
+#define endl '\n'
+#define ll long long
+
+#define dvect vector<int>vect
+#define pb(x) push_back(x)
+#define vectinL(n) for(ll i=0;i<n;i++){ ll x; cin >> x; vect.push_back(x);}
+#define vectin(n) for(int i=0;i<n;i++){ int x; cin >> x; vect.push_back(x);}
+#define vectout(v) for(auto p: v) cout<<p<<" "; cout<<endl;
+#define sortkor(x) sort(x.begin(),x.end())
+#define reversekor(x) reverse(x.begin(),x.end())
+#define all(vect) vect.begin(),vect.end()
+#define mini_pos(a)    ( min_element((a).begin(), (a).end()) - (a).begin())
+#define maxi_pos(a)    ( max_element((a).begin(), (a).end()) - (a).begin())
+
+#define F first
+#define S second
+#define gcd(a,b) __gcd(a,b)
+#define YES1 cout<<"Case "<<case++<<": YES\n"
+#define NO1 cout<<"Case "<<case++<<": NO\n"
+#define precision(n) fixed<<setprecision(n)
+#define testcase ll t; cin >>t; while(t--)
+
+#define yes cout<<"yes\n";
+#define Yes cout<<"Yes\n";
+#define YES cout<<"YES\n"
+
+#define no cout<<"no\n";
+#define No cout<<"No\n";
+#define NO cout<<"NO\n"
+#define vectd  vector<ll>vect(n)
+const int N=1e6+10;
+vector<vector<int>>graph(30);
+vector<bool>vis(30);
+template <typename T>
+inline void operator>>(istream &istream, vector<T> &v)
+{
+    for (T &i : v)
+    {
+        cin >> i;
+    }
+}
+void dfs(int v)
+{
+    vis[v]=true;
+
+    for(auto x: graph[v])
+    {
+        if(!vis[x])
+            dfs(x);
+    }
+}
+int main()
+{
+    fastkor;
+    int t;
+    cin >> t;
+    cin.ignore();
+    while(t--)
+    {
+        for(int i=0; i<30; i++)
+        {
+            graph[i].clear();
+            vis[i]=false;
+        }
+        char x;
+        cin >> x;
+        cin.ignore();
+
+        int len=x-'A'+1;
+
+        string s;
+        while(getline(cin,s))
+        {
+            if(s.empty())break;
+            int x=s[0]-'A';
+            int y=s[1]-'A';
+
+            graph[x].push_back(y);
+            graph[y].push_back(x);
+        }
+        ll ans=0;
+      //  for(auto x: graph[1])
+           // cout<<x<<" ";
+        for(int i=0; i<len; i++)
+        {
+            if(!vis[i])
+            { ans++;
+           // cout<<i+1<<" ";
+                dfs(i);
+
+            }
+        }
+        cout<<ans<<"\n";
+        if(t>0)
+            cout<<"\n";
+
+
+    }
+}
